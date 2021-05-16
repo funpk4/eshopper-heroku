@@ -1,0 +1,77 @@
+<div align="center"><button type="button" class="btn btn-success mr-1" data-toggle="modal"
+        (click)="successModal.show()">
+        Add Category
+    </button>
+</div>
+<div class="card">
+    <ul class="responsive-table card-body">
+        <li class="table-header">
+            <div class="col col-4">Image</div>
+            <div class="col col-4">Name</div>
+            <div class="col col-2">Status</div>
+            <div class="col col-2">Action</div>
+        </li>
+        <li class="table-row" *ngFor="let category of catData">
+            <div style="cursor: pointer;"  class="col-img" data-label="Job Id"><img
+                    style="border-radius: 50%; width: 35px; height: 35px; padding-top: none !important; "
+                    src="assets/img/avatars/5.jpg" alt=""></div>
+            <div style="cursor: pointer;"  class="col col-4" data-label="Customer Name">
+                {{category?.category}}</div>
+            <div class="col col-2" data-label="Amount"><i
+                    style="font-size: 30px; color: green; cursor: pointer;"
+                    class="fa fa-toggle-on"></i><i
+                    style="font-size: 30px; color: red; cursor: pointer;" class="fa fa-toggle-off"></i></div>
+            <div class="col col-2" data-label="Payment Status"><button  class="bttn1"><i
+                        class="fa fa-edit"></i></button><button class="bttn2"><i
+                        class="fa fa-trash"></i></button></div>
+        </li>
+        <p  align="center" style="color: red;">No Category Found</p>
+    </ul>
+</div>
+<div bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Category</h4>
+                <button type="button" class="close" (click)="successModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-group" [formGroup]="myForm">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="">Status</label>
+                            <select (change)="catoption($event)" class="form-control" formControlName="status">
+                                <option *ngFor="let category of catData" value="{{category._id}}">{{category.category}}</option>
+                            </select>
+                            <label for="">Name</label>
+                            <input type="text" class="form-control" formControlName="subcategory">
+                        </div>
+                        <!-- <div class="col-lg-6 " style="margin-top: 20px; margin-bottom: 20px;">
+                    <label for="">Image</label>
+                    <input class="form-control" type="file" name="" id="" formControlName="image">
+                </div> -->
+                        <!-- <div class="col-lg-6" style="margin-top: 20px; margin-bottom: 20px;">
+                            <label for="">Status</label>
+                            <select class="form-control" formControlName="status">
+                                <option value="1">Active</option>
+                                <option value="0">Deactive</option>
+                            </select>
+                        </div> -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="successModal.hide()">Close</button>
+                <button type="button" (click)="editSubCat()" class="btn btn-success">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div toastContainer></div>

@@ -1,0 +1,44 @@
+<div class="app-body">
+    <main class="main d-flex align-items-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+            <div class="card mx-4">
+              <div class="card-body p-4">
+                <form [formGroup]="myForm">
+                  <h1>Profile</h1>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="First Name" autocomplete="firstname" formControlName="fname" required>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Last Name" autocomplete="lastname" formControlName="lname" required>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Phone No" autocomplete="username" formControlName="phone" required>
+                  </div>
+  
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Age" autocomplete="username" formControlName="age" required>
+                  </div>
+                  <button type="submit" (click)="profile()" class="btn btn-block btn-success">Update</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  

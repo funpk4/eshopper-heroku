@@ -1,0 +1,37 @@
+
+    <div style="margin-top: 50px; margin-left: 100px;" class="container">
+        <form [formGroup]="myForm" >
+      <div><label class="lbl" for="" >Event Name</label><span><input formControlName="eventname" type="text" name="" id=""></span></div>  <br>
+      <div><label class="lbl" for="">Description</label><span><textarea formControlName="descevent"></textarea></span></div><br>
+      <div>  <label class="lbl" for="">Start Date</label><span><input type="date" formControlName="sdate" name="" id="" style="margin-right: 50px;"></span><label for="">End Date</label><span><input formControlName="edate"  type="date" name="" id=""></span>
+      </div><br>
+      <div>  <label class="lbl" for="">Organizer</label><span><input formControlName="organizer" type="text" name="" id=""></span>
+      </div><br>
+      <label class="lbl" for="">Tickets</label><button>Add New Ticket</button><br>
+    </form>
+    <form [formGroup]="childform">
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Ticket No</th>
+          <th>Price</th>
+        </tr>
+        
+            <tr>
+                <td><input type="text" formControlName="id"></td>
+                <td><input type="text" formControlName="tno"></td>
+                <td><input type="text" formControlName="price"></td>
+                <button (click)="event()">Save</button>
+              </tr>
+      </table>
+      <table>
+        <tr *ngFor="let row of data">
+            <td><label for="">{{row.id}}</label></td>
+            <td><label for="">{{row.tno}}</label></td>
+            <td><label for="">{{row.price}}</label></td>
+            <td><button>Edit</button></td>
+            <td><button>Delete</button></td>
+          </tr>
+      </table>
+    </form>
+<button (click)="postData()">Save</button>    </div>

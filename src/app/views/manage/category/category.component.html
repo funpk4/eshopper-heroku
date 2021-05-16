@@ -1,0 +1,152 @@
+<div align="center"><button type="button" class="btn btn-success mr-1" data-toggle="modal" (click)="successModal.show()">
+    Add Category
+  </button>
+</div>
+  <div class="card">
+    <ul class="responsive-table card-body">
+      <li class="table-header">
+        <div class="col col-4">Image</div>
+        <div class="col col-4">Name</div>
+        <div class="col col-2">Status</div>
+        <div class="col col-2">Action</div>
+      </li>
+      <li class="table-row" *ngFor="let category of catData | paginate: { itemsPerPage: 10, currentPage: p }">
+        <div style="cursor: pointer;" (click)="catdetails()" class="col-img" data-label="Job Id"><img style="border-radius: 50%; width: 35px; height: 35px; padding-top: none !important; " src="assets/img/avatars/5.jpg" alt=""></div>
+        <div style="cursor: pointer;" (click)="catdetails()" class="col col-4" data-label="Customer Name">{{category?.category}}</div>
+        <div  class="col col-2" data-label="Amount"><i *ngIf="category?.status=='1'" (click)="suspendcat(category?._id)" style="font-size: 30px; color: green; cursor: pointer;" class="fa fa-toggle-on"></i><i  *ngIf="category?.status=='0'" (click)="activecat(category?._id)" style="font-size: 30px; color: red; cursor: pointer;" class="fa fa-toggle-off"></i></div>
+        <div class="col col-2" data-label="Payment Status"><button (click)="editcat(category._id)" class="bttn1"><i class="fa fa-edit"></i></button><button (click)=delcat(category?._id) class="bttn2"><i class="fa fa-trash"></i></button></div>
+      </li>
+      <p *ngIf="catData=='' || !catData" align="center" style="color: red;">No Category Found</p>
+    </ul>
+    <pagination-controls *ngIf="catData"   (pageChange)="p =$event; pagechange()"></pagination-controls>
+  </div>
+<div bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Category</h4>
+          <button type="button" class="close" (click)="successModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-group" [formGroup]="myForm">
+                <div class="row">
+                <div class="col-lg-12">
+                <label for="">Name</label>
+                <input type="text" class="form-control" formControlName="category">
+                </div>
+                <!-- <div class="col-lg-6 " style="margin-top: 20px; margin-bottom: 20px;">
+                    <label for="">Image</label>
+                    <input class="form-control" type="file" name="" id="" formControlName="image">
+                </div> -->
+                    <div class="col-lg-6" style="margin-top: 20px; margin-bottom: 20px;">
+                    <label for="">Status</label>
+                      <select class="form-control" formControlName="status">
+                        <option value="1">Active</option>
+                        <option value="0">Deactive</option>
+                      </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="successModal.hide()">Close</button>
+          <button type="button" class="btn btn-success" (click)="postCat()">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div bsModal #successModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Active Category</h4>
+        <button type="button" class="close" (click)="successModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do You Want to Active <strong>"{{cdata?.category}}"</strong> Category ? &hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="successModal2.hide()">Close</button>
+        <button type="button" class="btn btn-success" (click)="activeCat()">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div bsModal #successModal3="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Category</h4>
+        <button type="button" class="close" (click)="successModalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form class="form-group" [formGroup]="myForm">
+            
+              <div class="row">
+              <div class="col-lg-12">
+              <label for="">Name</label>
+              <input type="text" class="form-control" formControlName="category">
+              </div>
+              </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="successModalHide()">Close</button>
+        <button type="button" class="btn btn-success" (click)="editCat()">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4  class="modal-title">Delete Category</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do You Want to Delete <strong>"{{cdata?.category}}"</strong> Category ? &hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="hidedangermodal()">Close</button>
+        <button (click)="deleteCat()" type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div bsModal #dangerModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4  class="modal-title">Suspend Category</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do You Want to Suspend <strong>"{{cdata?.category}}"</strong> Category ? &hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="hidedangermodal2()">Close</button>
+        <button (click)="suspendCat()" type="button" class="btn btn-danger">Suspend</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div toastContainer></div>
